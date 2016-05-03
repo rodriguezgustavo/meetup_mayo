@@ -5,10 +5,11 @@ import(
 //	"sync"
 )
 
-var users map[int]string
+var users map[int]string // users map id/name
 
 //var loadOne sync.Once
 
+// Load users
 func loadUsers() {
 	users = make(map[int]string)
 
@@ -17,6 +18,7 @@ func loadUsers() {
 	}
 }
 
+// Get and user by id
 func GetUser(id int) string {
 	if users == nil {
 		loadUsers()
