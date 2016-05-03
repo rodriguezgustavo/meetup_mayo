@@ -6,7 +6,6 @@ func TestAccount(t *testing.T) {
 	done := make(chan struct{})
 
 	deposits:=0
-	deposits2:=0
 	whithdraws:=0
 
 	go func() {
@@ -16,15 +15,6 @@ func TestAccount(t *testing.T) {
 		}
 		done <- struct{}{}
 	}()
-
-	go func() {
-		for i:=0;i<1000;i++ {
-			Deposit(200)
-			deposits2+=200
-		}
-		done <- struct{}{}
-	}()
-
 
 	go func() {
 		for i:=0;i<1000;i++ {
@@ -38,9 +28,8 @@ func TestAccount(t *testing.T) {
 	// Wait for both transactions.
 	<-done
 	<-done
-	<-done
 
-	if got, want := Balance(), deposits+deposits2-whithdraws; got != want {
+	if got, want := Balance(), deposits-whithdraws; got != want {
 		t.Errorf("Balance = %d, want %d", got, want)
 	}
 }
